@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Data/Cache
+cache/
+*/cache/
+output/
+*/output/
+selected_repos/
+*/selected_repos/
+*.jsonl
+*.gz
+*.db
+*.log
+run.log
+clone_failures.txt
+
+# OS/IDE
+.DS_Store
+.idea/
+.vscode/

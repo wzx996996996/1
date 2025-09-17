@@ -1,0 +1,127 @@
+[
+  {
+    "fork_id": "v1nc/flipperzero-firmware",
+    "original_repo_id": "DarkFlippers/unleashed-firmware",
+    "new_commit_count": 10,
+    "sample_new_commits": [
+      {
+        "commit_hash": "634b7398db776974df81e5e14b3ce903197440b6",
+        "message": "Update ReadMe.md",
+        "author": "v1nc",
+        "date": "2022-09-01 17:20"
+      },
+      {
+        "commit_hash": "dd723294230722e3a61c2599b50e951b8c15922e",
+        "message": "remove wav_player",
+        "author": "v1nc",
+        "date": "2022-09-09 10:37"
+      },
+      {
+        "commit_hash": "dda48127863e9b577ae88572ef2e1a88cf721759",
+        "message": "merged upstream",
+        "author": "v1nc",
+        "date": "2022-08-17 15:11"
+      }
+    ]
+  },
+  {
+    "fork_id": "lyc8503/Sandboxie-crack",
+    "original_repo_id": "sandboxie-plus/Sandboxie",
+    "new_commit_count": 4,
+    "sample_new_commits": [
+      {
+        "commit_hash": "ee52035f9b77435dc7d04a10ad681d2de81f550e",
+        "message": "Add methods to run without test mode",
+        "author": "lyc8503",
+        "date": "2024-10-09 00:01"
+      },
+      {
+        "commit_hash": "5a0eab0d364a18a41a981da55ed1e00815476887",
+        "message": "Patch: remove signature verify",
+        "author": "lyc8503",
+        "date": "2024-08-23 16:13"
+      },
+      {
+        "commit_hash": "7ac9707a0981698d8eb0b960ed1de0525b46b609",
+        "message": "Update README.md",
+        "author": "lyc8503",
+        "date": "2024-08-23 16:52"
+      }
+    ]
+  },
+  {
+    "fork_id": "voicerepublic/linux",
+    "original_repo_id": "raspberrypi/linux",
+    "new_commit_count": 2477,
+    "sample_new_commits": [
+      {
+        "commit_hash": "9bdd47c53b7cf79f68ef5038e9494261f060f64e",
+        "message": "usb: dwc3: core: avoid Overflow events\n\ncommit e71d363d9c611c99fb78f53bfee99616e7fe352c upstream.\n\nNow that we're handling so many transfers at a time\nand for some dwc3 revisions LPM events *must* be\nenabled, we can fall into a situation where too many\nevents fire and we start receiving Overflow events.\n\nLet's do what XHCI does and allocate a full page for\nthe Event Ring, this will avoid any future issues.\n\nSigned-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>",
+        "author": "Felipe Balbi",
+        "date": "2017-01-12 11:39"
+      },
+      {
+        "commit_hash": "dd2ef28eb76e5cb573f18718275e607e4fc88283",
+        "message": "MIPS: ip22: Fix ip28 build for modern gcc\n\ncommit 23ca9b522383d3b9b7991d8586db30118992af4a upstream.\n\nkernelci reports a failure of the ip28_defconfig build after upgrading its\ngcc version:\n\narch/mips/sgi-ip22/Platform:29: *** gcc doesn't support needed option -mr10k-cache-barrier=store.  Stop.\n\nThe problem apparently is that the -mr10k-cache-barrier=store option is now\nrejected for CPUs other than r10k. Explicitly including the CPU in the\ncheck fixes this and is safe because both options were introduced in\ngcc-4.4.\n\nSigned-off-by: Arnd Bergmann <arnd@arndb.de>\nCc: linux-mips@linux-mips.org\nCc: linux-kernel@vger.kernel.org\nPatchwork: https://patchwork.linux-mips.org/patch/15049/\nSigned-off-by: Ralf Baechle <ralf@linux-mips.org>\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>",
+        "author": "Arnd Bergmann",
+        "date": "2017-03-18 19:14"
+      },
+      {
+        "commit_hash": "f72b751f434062deaf16a1aca2c5f53ddf71ed8f",
+        "message": "drm/atomic: fix an error code in mode_fixup()\n\ncommit f9ad86e42d0303eeb8e0d41bb208153022ebd9d2 upstream.\n\nHaving \"ret\" be a bool type works for everything except\nret = funcs->atomic_check().  The other functions all return zero on\nerror but ->atomic_check() returns negative error codes.  We want to\npropagate the error code but instead we return 1.\n\nI found this bug with static analysis and I don't know if it affects\nrun time.\n\nFixes: 4cd4df8080a3 (\"drm/atomic: Add ->atomic_check() to encoder helpers\")\nSigned-off-by: Dan Carpenter <dan.carpenter@oracle.com>\nSigned-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>\nLink: http://patchwork.freedesktop.org/patch/msgid/20170207234601.GA23981@mwanda\nSigned-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>",
+        "author": "Dan Carpenter",
+        "date": "2017-03-15 10:02"
+      }
+    ]
+  },
+  {
+    "fork_id": "mplayer2/mplayer2",
+    "original_repo_id": "mpv-player/mpv",
+    "new_commit_count": 27,
+    "sample_new_commits": [
+      {
+        "commit_hash": "7034d1f7cf536a9f339c0bcc8ad79f2063488e28",
+        "message": "commands: format shown property time values like OSD time\n\nConverting time-based property values to strings via M_PROPERTY_PRINT\nresulted in a string different to what the OSD displays (if the OSD\nlevel is >= 2).\n\nChange it to match the OSD.",
+        "author": "wm4",
+        "date": "2012-08-28 00:07"
+      },
+      {
+        "commit_hash": "1ccf6a1bebe5ceb3c5ff55595e25266e72e01deb",
+        "message": "video: support GBR mode h264 decoding\n\nAdd support for GBR pixel formats (used by special x264 encoding\nmode). When these formats are not directly supported, converting them\nto RGB would be sanest. However, it seems that currently libswscale\nonly supports GBRP* -> RGB conversions in the 8-bit case. So only add\nentries to the vf_scale preferred conversions list for that case.\n\nAlso add 422P9 support (for some reason only depths 8, 10 and 16 were\nsupported for 422).",
+        "author": "Uoti Urpala",
+        "date": "2012-08-28 00:17"
+      },
+      {
+        "commit_hash": "c968bdc3af16ee61b800028ad24f7e499a31c416",
+        "message": "cocoa_common: add HiDPI/retina support\n\nWith a HiDPI screen, for performance and backwards compatibility\nreasons, AppKit requests an OpenGL surface with a pixel number that\nequals the user points number. After the image is rendered to this\nsmaller surface, it is upscaled so that its dimensions are comparable\nacross screens of different DPIs. The applied scaling is not that good\nand makes the video/subtitles blurry; this is not acceptable for a\nvideo player.\n\nRequest AppKit to use a high resolution OpenGL surface to back the\nmplayer2 OpenGL view. Also set the window pixel size information\ncorrectly in the VO object by converting user points to actual pixels.\n\nAll the system version checks are done at runtime so that the feature\nis available on OSX 10.7 even with a binary compiled with older SDKs.",
+        "author": "Stefano Pigozzi",
+        "date": "2012-08-10 23:17"
+      }
+    ]
+  },
+  {
+    "fork_id": "Bastardkb/bastardkb-qmk",
+    "original_repo_id": "qmk/qmk_firmware",
+    "new_commit_count": 57,
+    "sample_new_commits": [
+      {
+        "commit_hash": "92c61b60b893e7a7982b7001d00d4881f3e91ba7",
+        "message": "Fix some typos",
+        "author": "Charly Delay",
+        "date": "2023-10-09 21:06"
+      },
+      {
+        "commit_hash": "ca53b362634b9b6286828778a4927b49524a7eee",
+        "message": "Adjust firmware script\n\nBuild Vial keymaps for RP2040-based boards off `bkb-develop-feat-zykrah-vial`.",
+        "author": "Charly Delay",
+        "date": "2022-08-07 12:58"
+      },
+      {
+        "commit_hash": "3a0f56714ea847b7991fa7d724637d81835951fa",
+        "message": "release: only build firmware for rp2040 on bkb-develop-feat-zykrah-vial",
+        "author": "Charly Delay",
+        "date": "2022-08-07 15:21"
+      }
+    ]
+  }
+]

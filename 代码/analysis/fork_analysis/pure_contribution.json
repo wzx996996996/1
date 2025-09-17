@@ -1,0 +1,22 @@
+{
+  "description": "Type 1中仅依赖平台标记、无任何代码共享的纯贡献型forks",
+  "count": 16,
+  "fork_ids": [
+    "xMasterX/FlipperPlayground",
+    "FriendsOfPHP/php",
+    "skizzophrenic/Ubers-SD-Files",
+    "RogueMaster/Flipper",
+    "nocomp/Flipper-dumps",
+    "hahaTT0902/Flipper-Collection",
+    "Bastardkb/bastardkb-qmk",
+    "FFmpeg-wasm/FFmpeg.wasm",
+    "scalarhq/ffmpeg.wasm",
+    "microsoft/openssl",
+    "dokmic/eth2wlan",
+    "tachigami/zapret-keenetic",
+    "mpeylo/cmpossl",
+    "0dayCTF/Flipper",
+    "ValdikSS/zapret",
+    "tzarc/qmk_firmware"
+  ]
+}
