@@ -63,6 +63,13 @@ python3 final_analyzer.py
 ls examples/analysis_results.csv
 ```
 
+6) 导出 PR 汇总（最新步骤）：
+```bash
+cd 代码/audit
+export PR_SUMMARY_CSV=repo_pr_commit_summary.csv
+python3 repo_pr_commit_summary.py
+```
+
 ### 快速开始
 1) 导入数据：进入 `importers/` 运行相应脚本
 2) 克隆历史：进入 `repo_history/` 运行 `git_history_collector.py`
