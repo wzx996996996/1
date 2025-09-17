@@ -1,11 +1,26 @@
-## 4（PR/Commit 审计与导出）
+## 审计与导出（audit/）
 
-- pr_commit_files_enricher.py：为 PR commit 补充 stats 与 files 详情，写入新集合并导出 CSV。
-- pr_commit_files_exporter.py：基于已存明细导出所需报表（命名对齐，脚本内容可继续完善）。
-- commit_pr_fork_stats_export.py：合并 `commit_nodes1`、`pr_commit_data`、`repo_with_forks` 导出明细 CSV。
-- fork_audit.py / batch_fork_audit.py：fork 审计（单仓/批量）。
-- repo_pr_counts.py：仓库 PR 计数导出。
-- 贡献行为分析.py / 活跃周期分析.py / 提交内容类型分析.py：行为/周期/内容类型分析脚本。
-- api.py：相关统计的 API 辅助（若有）。
+当前可用脚本：
+- `pr_commit_files_enricher.py`：为 PR commit 补充 stats 与 files 详情，写入新集合并导出 CSV。
+- `fork_audit.py` / `batch_fork_audit.py`：fork 审计（单仓/批量）。
 
-依赖：pymongo、requests、pandas、GitHub Token（从环境变量读取更安全）。
+依赖：`pymongo`、`requests`、`tqdm`（可选）、GitHub Token（从环境变量读取更安全）。
+
+### 环境变量
+- `GITHUB_TOKENS`：逗号分隔的多个 GitHub Token，用于提升 API 速率上限
+- `MONGO_URI`：Mongo 连接串（默认 `mongodb://localhost:27017/`）
+
+### 运行示例
+为 PR 提交补充文件级明细并导出：
+```bash
+cd 代码/audit
+export GITHUB_TOKENS=tok1,tok2
+python3 pr_commit_files_enricher.py
+```
+
+批量 fork 审计（需本地仓库与 `repo_with_forks`）：
+```bash
+cd 代码/audit
+export SELECTED_REPOS_BASE=/abs/path/selected_repos
+python3 batch_fork_audit.py
+```
