@@ -80,4 +80,65 @@ ls examples/analysis_results.csv
 
 - 本项目已移除硬编码 Token 和绝对路径；可直接推送到 GitHub。
 - 提交前请确保 `.env` 与缓存/大文件未纳入版本控制（见 `.gitignore`）。
-test sync 2025年 9月17日 星期三 19时37分54秒 CST
+
+---
+
+## 模块详解（目录 → 作用）
+
+- `代码/collection/`：调用 GitHub API 抓取 Top 仓库与 forks（支持多 Token 轮换，断点续抓，带缓存）。
+- `代码/importers/`：将 CSV/JSONL 导入 MongoDB，并做 `repos`/`forks` 到 `repo_with_forks` 的合并。
+- `代码/repo_history/`：按 `SELECTED_REPOS_BASE` 浅克隆仓库并 `--unshallow` 补齐完整提交历史，带失败重试与标记文件。
+- `代码/dag/`：按仓库及其 forks 构建提交 DAG，写入 `commit_nodes`/`commit_nodes1`（分片入库）。
+- `代码/file_dag/`：`genere.py` 提供文件级精简 DAG 构建与 Mongo 持久化的库函数（按目录/文件层级组织节点）。
+- `代码/analysis/`：统计分析脚本，汇总并导出 `analysis_results.csv` 到 `examples/`。
+- `代码/audit/`：PR/提交审计脚本（从 `pr_commit_data` 拉取，调用 GitHub API 获取 stats/files，导出 CSV 或写回集合）。
+- `代码/validation/`：研究/核验脚本（时间模式、寿命、贡献统计等），不参与主线上批量流程。
+
+## 环境变量一览（常用）
+
+- `GITHUB_TOKENS`：逗号分隔的多个 GitHub Token（抓取/审计脚本用）。
+- `MONGO_URI`：Mongo 连接串（默认 `mongodb://localhost:27017/`）。
+- `SELECTED_REPOS_BASE`：本地完整仓库根目录（用于历史补全、DAG 构建）。
+- `ORIGINAL_REPOS_CSV` / `FORKS_CSV`：导入脚本输入路径（`importers/`）。
+- `PR_COMMIT_CSV` / `PR_COMMIT_OUTPUT`：PR 提交数据的输入/输出（按需）。
+- `ANALYSIS_CSV`：分析结果导出文件名（默认 `analysis_results.csv`）。
+
+可选（`file_dag/genere.py`）：
+- `GIT_GRAPH_MONGO_URI` / `GIT_GRAPH_MONGO_DB` / `GIT_GRAPH_MONGO_COLL`：文件级 DAG 持久化目标库/表。
+- `GIT_GRAPH_CLEAR_FIRST`、`GIT_GRAPH_FOLLOW_RENAMES`、`GIT_GRAPH_SINCE`、`GIT_GRAPH_INCLUDE`：细节控制。
+
+## MongoDB 集合与索引（建议）
+
+- `github.repo_with_forks`：原始仓与其 forks 的合并文档。
+- `github.commit_nodes` / `github.commit_nodes1`：提交 DAG（可能按 repo 分片）。
+- `github.pr_commit_data`：PR 与提交的原始明细。
+- `github.pr_commit_with_stats` / `github.new_pr_commit_with_stats`：含 stats/files 的增强明细（按所用脚本而定）。
+
+建议索引（提升联表/查询性能）：
+- `repo_with_forks.repo_id`（唯一/普通）、`repo_with_forks.forks.repo_id`（子文档查询）
+- `commit_nodes(1).repo`、`commit_nodes(1).commits.<SHA>`（按需要）
+- `pr_commit_data.Repo`、`pr_commit_data.PR Number`
+
+## 更多示例
+
+文件级 DAG（单仓库）持久化示例：
+```bash
+cd 代码/file_dag
+export SELECTED_REPOS_BASE=/abs/path/selected_repos
+python3 genere.py owner/repo
+```
+
+PR 提交增强并导出（含文件更改明细）：
+```bash
+cd 代码/audit
+export GITHUB_TOKENS=tok1,tok2
+python3 pr_commit_files_enricher.py
+```
+
+## 故障排查 FAQ
+
+- GitHub 403 / 速率限制：配置多个 `GITHUB_TOKENS` 并自动轮换；适当添加 `sleep`。
+- Push 被拦截（Push Protection）：从代码/提交历史中移除密钥，`git commit --amend` 然后 `git push --force`。
+- Mongo 连接失败：确认 `MONGO_URI`、本地服务状态与网络可达。
+- 本地仓库路径不存在：检查 `SELECTED_REPOS_BASE` 与 `selected_repos` 实际目录结构。
+- 大仓库克隆超时：提高超时时间、减少并发、重试，或分批处理。
